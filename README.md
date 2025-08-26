@@ -1,103 +1,83 @@
-🚗 Concesionaria UTN
+Concesionaria UTN
 
-Concesionaria UTN es un sistema de gestión de concesionarias de vehículos (autos, motos y camiones), que centraliza y automatiza operaciones de inventario, ventas y administración de personas (clientes y empleados).
+Concesionaria UTN es un sistema de software para la gestión de una concesionaria de vehículos que vende autos, motos y camiones. La aplicación centraliza y automatiza operaciones relacionadas con la administración de vehículos, personas (clientes y empleados) y ventas.
 
-El sistema es modular, escalable y fácil de mantener, con énfasis en integridad de datos y eficiencia operativa.
+El sistema está diseñado para ser modular, escalable y fácil de mantener, con un enfoque en la integridad de los datos y la eficiencia operativa.
 
-✨ Características principales
+✨ Funcionalidades
 
-Gestión de vehículos: Agregar, eliminar, modificar, buscar y filtrar vehículos.
+Gestión de vehículos: Agregar, modificar, buscar y listar autos, motos y camiones.
 
-Gestión de personas: Registrar y administrar clientes y empleados con validaciones.
+Gestión de personas: Registrar, validar y administrar clientes y empleados.
 
-Registro de ventas: Asociar vehículos con clientes y empleados, generar facturas digitales y seguimiento de cuotas.
+Registro de ventas: Asociar vehículos con clientes y empleados, generando una factura digital. Permite el seguimiento y pago de planes de cuotas.
 
-Validación de datos: Comprobación de DNI, correo electrónico y consistencia de datos.
+Validación de datos: Garantiza la consistencia de información como DNI y correo electrónico.
 
-Persistencia de información: Guardado y carga mediante JSON, asegurando que los datos se mantengan entre sesiones.
+Persistencia de datos: Guarda y carga información en archivos JSON, asegurando que los datos se mantengan entre sesiones.
 
-Excepciones personalizadas: Manejo de errores específicos y validaciones de negocio.
+💻 Tecnologías
 
-Interfaz de consola: Menús claros e interactivos para empleados y administradores.
+Java: Lenguaje principal del proyecto.
 
-🛠️ Tecnologías utilizadas
+Programación Orientada a Objetos (OOP): Uso de herencia y polimorfismo para estructurar clases como Vehiculo y Personas.
 
-Java
+Programación Genérica: La clase Gestor utiliza genéricos para manejar diferentes tipos de vehículos y personas, promoviendo reutilización y escalabilidad.
 
-Programación Orientada a Objetos (OOP): Herencia y polimorfismo.
+Colecciones: Se usan HashSet para vehículos y HashMap para personas, optimizando el manejo de datos.
 
-Programación genérica: La clase Gestor maneja distintos tipos de vehículos y personas.
+Excepciones personalizadas: Control de errores y validaciones específicas a lo largo del sistema.
 
-Colecciones de Java: HashSet para vehículos y HashMap para personas.
+🛠️ Diseño del sistema
 
-JSON: Persistencia de datos.
+El diseño sigue un enfoque estructurado con fases de análisis, diseño, implementación, pruebas y documentación.
 
-Excepciones personalizadas: Validaciones y control de errores.
+Clases principales
 
-🗂️ Estructura del proyecto
-src/
-├── main/
-│   ├── java/
-│   │   ├── entities/        # Clases de Vehículo, Personas y Compra
-│   │   ├── services/        # Lógica de gestión y validaciones
-│   │   ├── utils/           # Validaciones y helpers
-│   │   └── MenuSistema.java # Interfaz de usuario
-│   └── resources/
-│       └── data/            # Archivos JSON de persistencia
-└── test/                    # Pruebas unitarias y funcionales
+Vehiculo (abstracta): Base para Auto, Moto y Camion, maneja información genérica de vehículos y persistencia en JSON.
 
-🏗️ Clases principales
+Personas (abstracta): Base para Empleado y Cliente, gestiona datos generales y serialización JSON.
 
-Vehiculo (abstracta): Base de Auto, Moto y Camion.
+Compra: Modela una transacción de venta, vinculando vehículo, cliente, empleado y factura generada.
 
-Personas (abstracta): Base de Empleado y Cliente.
+Gestor: Clase genérica que gestiona operaciones (Agregar, Eliminar, Modificar) para vehículos y personas.
 
-Compra: Modela una venta y factura.
+Concesionaria: Administra inventario, ventas y pagos interactuando con Gestor y Compra.
 
-Gestor: Administración genérica de vehículos y personas.
+MenuSistema: Maneja la interfaz de usuario, inicio de sesión, carga de datos y navegación por menús.
 
-Concesionaria: Coordina inventario, ventas y pagos.
+Validaciones: Contiene métodos para validar información ingresada, como formato de DNI y correo electrónico.
 
-MenuSistema: Controla la interfaz de consola.
+Enumeraciones
 
-Validaciones: Métodos de validación de DNI, email, etc.
+Se utilizan enumeraciones para definir valores constantes y evitar errores de ingreso de datos, como:
+TipoCombustible, TipoPago, TipoMoto, entre otros.
 
-🚀 Cómo usar
+🚀 Cómo empezar
 
-Clonar el repositorio:
+El sistema utiliza una interfaz de consola. Para usarlo:
 
-git clone https://github.com/tu_usuario/concesionaria-utn.git
-cd concesionaria-utn
+Inicio de sesión
 
+Al iniciar la aplicación, se solicitará ingresar DNI y contraseña.
 
-Compilar el proyecto:
+Si el archivo Personas.json está vacío, se crearán automáticamente cuatro cuentas de empleado por defecto: Lautaro Ramos, Lautaro Castro, Maica Odera y Piero Visitación.
 
-javac -d bin src/main/java/**/*.java
+Menú principal
 
+Tras iniciar sesión correctamente, se accede al menú principal con las siguientes opciones:
 
-Ejecutar la aplicación:
+Gestión de vehículos: Agregar, eliminar, buscar, filtrar y modificar vehículos.
 
-java -cp bin MenuSistema
+Gestión de personas: Registrar, eliminar, buscar y modificar clientes y empleados.
 
+Gestión de ventas: Listar ventas, generar nuevas ventas y pagar cuotas.
 
-Iniciar sesión con DNI y contraseña. Si el archivo Personas.json está vacío, se crean cuentas de empleado por defecto: Lautaro Ramos, Lautaro Castro, Maica Odera y Piero Visitación.
+Información de la concesionaria: Ver información general del negocio.
 
-Explorar el menú:
+Salir: Cerrar la aplicación.
 
-Gestión de vehículos
-
-Gestión de personas
-
-Gestión de ventas
-
-Información de la concesionaria
-
-📌 Enumeraciones importantes
-
-TipoCombustible
-
-TipoPago
-
+Explora los menús para realizar todas las operaciones de gestión disponibles.
 TipoMoto
 
 Permiten mantener consistencia y evitar errores de ingreso de datos.
