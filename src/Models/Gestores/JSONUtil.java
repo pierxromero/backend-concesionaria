@@ -1,0 +1,127 @@
+package Models.Gestores;
+
+import Enums.TipoDeObject;
+import Models.Compras.Compra;
+import Models.Persona.Cliente;
+import Models.Persona.Empleado;
+import Models.Persona.Personas;
+import Models.Vehiculos.Auto;
+import Models.Vehiculos.Camion;
+import Models.Vehiculos.Moto;
+import Models.Vehiculos.Vehiculo;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
+
+public  class JSONUtil {
+
+    public  static void grabar(JSONArray jsonArray,String Archivox){
+        try{
+            FileWriter file = new FileWriter(Archivox);
+            file.write(jsonArray.toString(4));
+            file.flush();
+            file.close();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
+    public static JSONTokener leer(String archi){
+        JSONTokener tokener = null;
+        try {
+            tokener = new JSONTokener(new FileReader(archi));
+        }catch (FileNotFoundException e ){
+            e.printStackTrace();
+        }
+        return  tokener;
+    }
+
+    public static HashSet<Vehiculo> LeerArchivoVehiculos(String archiVehiculo) {
+        HashSet<Vehiculo> vehiculos = null;
+        try {
+            vehiculos = new HashSet<>();
+            JSONArray jsonArray = new JSONArray(JSONUtil.leer(archiVehiculo));
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String tipo = jsonObject.getEnum(TipoDeObject.class, "tipo").toString();
+
+                if (tipo.equalsIgnoreCase("auto")) {
+                    Vehiculo auto = new Auto();
+                    auto.fromJSON(jsonObject);
+                    vehiculos.add(auto);
+
+                } else if (tipo.equalsIgnoreCase("camion")) {
+                    Vehiculo camion = new Camion();
+                    camion.fromJSON(jsonObject);
+                    vehiculos.add(camion);
+
+                } else if (tipo.equalsIgnoreCase("moto")) {
+                    Vehiculo moto = new Moto();
+                    moto.fromJSON(jsonObject);
+                    vehiculos.add(moto);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return vehiculos;
+    }
+
+    public static HashMap<String, Personas> LeerArchivoPersonas(String archiPersonas) {
+        HashMap<String, Personas> personas = null;
+        try {
+            personas = new HashMap<>();
+            JSONArray jsonArray = new JSONArray(JSONUtil.leer(archiPersonas));
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String tipo = jsonObject.getEnum(TipoDeObject.class, "tipo").toString();
+
+                if (tipo.equalsIgnoreCase("cliente")) {
+                    Personas cliente = new Cliente();
+                    cliente.fromJSON(jsonObject);
+                    personas.put(cliente.getDni(), cliente);
+
+                } else if (tipo.equalsIgnoreCase("empleado")) {
+                    Personas empleado = new Empleado();
+                    empleado.fromJSON(jsonObject);
+                    personas.put(empleado.getDni(), empleado);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error Leyendo Personas: " + e.getMessage());
+        }
+        return personas;
+    }
+
+    public static HashSet<Compra> LeerArchivoCompras(String archiCompras) {
+        HashSet<Compra> compras = null;
+        try {
+            compras = new HashSet<>();
+            JSONArray jsonArray = new JSONArray(JSONUtil.leer(archiCompras));
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                Compra compra = new Compra();
+                compra.fromJSON(jsonObject);
+                compras.add(compra);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return compras;
+    }
+}

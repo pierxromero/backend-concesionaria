@@ -1,0 +1,78 @@
+[
+    {
+        "estado": true,
+        "tipo": "CLIENTE",
+        "licenciaConducir": false,
+        "apellido": "Velez",
+        "genero": "FEMENINO",
+        "direccion": "Bolivar 1424",
+        "telefono": "223-642-2424",
+        "nombre": "Sol",
+        "dni": "44987654",
+        "email": "velez@gmail.com"
+    },
+    {
+        "estado": true,
+        "tipo": "EMPLEADO",
+        "Antiguedad": 2,
+        "apellido": "Ramos",
+        "genero": "MASCULINO",
+        "direccion": "Libertad 981",
+        "sueldoBase": 10000.4,
+        "contrasena": "lauta233",
+        "nombre": "Lautaro",
+        "sector": "ADMINISTRACION",
+        "dni": "44658233"
+    },
+    {
+        "estado": true,
+        "tipo": "CLIENTE",
+        "licenciaConducir": true,
+        "apellido": "Maldonado",
+        "genero": "MASCULINO",
+        "direccion": "Lomas 872",
+        "telefono": "223-414-5555",
+        "nombre": "Lucas",
+        "dni": "44295824",
+        "email": "maldonado@gmail.com"
+    },
+    {
+        "estado": true,
+        "tipo": "EMPLEADO",
+        "Antiguedad": 5,
+        "apellido": "Romero",
+        "genero": "MASCULINO",
+        "direccion": "Constitucion 900",
+        "sueldoBase": 18000,
+        "contrasena": "piero987",
+        "nombre": "Piero",
+        "sector": "VENTAS",
+        "dni": "95296095"
+    },
+    {
+        "estado": true,
+        "tipo": "EMPLEADO",
+        "Antiguedad": 8,
+        "apellido": "Odera",
+        "genero": "FEMENINO",
+        "direccion": "20 de Septiembre",
+        "sueldoBase": 20000.5,
+        "contrasena": "mai90",
+        "nombre": "Maica",
+        "sector": "VENTAS",
+        "dni": "45987124"
+    },
+    {
+        "estado": true,
+        "tipo": "EMPLEADO",
+        "Antiguedad": 4,
+        "apellido": "Castro",
+        "genero": "MASCULINO",
+        "direccion": "Guemes 255",
+        "sueldoBase": 15000,
+        "contrasena": "castro100",
+        "nombre": "Lautaro",
+        "sector": "ADMINISTRACION",
+        "dni": "45612666"
+    }
+]

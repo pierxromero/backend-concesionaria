@@ -1,0 +1,75 @@
+package Models;
+
+import Enums.Personas.Genero;
+import Enums.Personas.Sector;
+import Enums.TipoDeObject;
+import Exceptions.PersonaYaRegistradaException;
+import Models.Gestores.Gestor;
+import Models.Gestores.JSONUtil;
+import Models.Persona.Cliente;
+import Models.Persona.Empleado;
+import org.json.JSONArray;
+
+public class Main {
+    public static void main(String[] args) {
+//        Vehiculo vehiculo = new Vehiculo();
+//        vehiculo.setEstado(true);
+//        vehiculo.setMarca("Toyota");
+//        vehiculo.setModelo("Corolla");
+//        vehiculo.setPrecio(20000.00);
+//        vehiculo.setAnio(Year.of(2022));
+//        vehiculo.setKilometraje(10000);
+//        vehiculo.setCombustible(TipoDeCombustible.GASOLINA);
+//        vehiculo.setCapacidadCombustible(50);
+//
+//        JSONObject json = vehiculo.toJSON();
+//        System.out.println(json.toString(8));
+//      System.out.println(UUID.randomUUID().toString().replace("-", "").substring(0, 10));
+        Menu menu = new Menu();
+        Empleado empleado1 = new Empleado(TipoDeObject.EMPLEADO, "Perez","Rivadavia 2345","37892304",true, Genero.MASCULINO,"Juan",3, Sector.ADMINISTRACION,900000.0);
+        Empleado empleado2 = new Empleado(TipoDeObject.EMPLEADO, "Rodriguez","Jujuy 1785","32475972",true, Genero.MASCULINO,"Julian",5, Sector.VENTAS,800000.0);
+        Empleado empleado3 = new Empleado(TipoDeObject.EMPLEADO, "Sanchez","Chaco 2749","31865792",true, Genero.FEMENINO,"Maria",7, Sector.CONTABILIDAD,950000.0);
+        Empleado empleado4 = new Empleado(TipoDeObject.EMPLEADO, "Ruiz","Balcarce 1378","28465784",true, Genero.MASCULINO,"Ernesto",10, Sector.TALLER,800000.0);
+        Cliente cliente1 = new Cliente(TipoDeObject.CLIENTE,"Ramos","Belgica 789","207485902",true,Genero.MASCULINO,"Sergio","SergioRamos@gmail.com",true,"2235482034");
+        Cliente cliente2 = new Cliente(TipoDeObject.CLIENTE,"Suarez","Vieytes 378","26859401",true,Genero.FEMENINO,"Lourdes","LourdesSuarez@gmail.com",true,"223458694");
+        Gestor gestor = new Gestor<>();
+        try
+        {
+            gestor.agregarPersona(empleado1);
+        } catch (PersonaYaRegistradaException e) {
+            System.out.println(e.getMessage());
+        }
+        try
+        {
+            gestor.agregarPersona(empleado2);
+        } catch (PersonaYaRegistradaException e) {
+            System.out.println(e.getMessage());
+        }
+        try
+        {
+            gestor.agregarPersona(empleado3);
+        } catch (PersonaYaRegistradaException e) {
+            System.out.println(e.getMessage());
+        }
+        try
+        {
+            gestor.agregarPersona(empleado4);
+        } catch (PersonaYaRegistradaException e) {
+            System.out.println(e.getMessage());
+        }
+        try
+        {
+            gestor.agregarPersona(cliente1);
+        } catch (PersonaYaRegistradaException e) {
+            System.out.println(e.getMessage());
+        }
+        try
+        {
+            gestor.agregarPersona(cliente2);
+        } catch (PersonaYaRegistradaException e) {
+            System.out.println(e.getMessage());
+        }
+        JSONArray JSONpersonas = gestor.personasToJSONArray();
+        JSONUtil.grabar(JSONpersonas,"Personas.JSON");
+    }
+}

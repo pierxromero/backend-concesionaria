@@ -1,0 +1,102 @@
+package Models.Vehiculos;
+
+import Enums.TipoDeObject;
+import Enums.Vehiculos.TipoDeCarga;
+import Enums.Vehiculos.TipoDeCombustible;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.time.Year;
+import java.util.jar.JarException;
+import java.util.logging.Logger;
+
+public class Camion extends Vehiculo{
+    private static final Logger logger = Logger.getLogger(Camion.class.getName());
+    private Integer capacidadCarga;
+    private Double longitud;
+    private TipoDeCarga carga;
+
+    public Camion() {
+        super();
+    }
+
+    public Camion(Boolean estado, String marca, String modelo,
+                  String matricula, Double precio, Year anio, Integer kilometraje,
+                  TipoDeCombustible combustible, Integer capacidadCombustible,
+                  TipoDeObject tipo, Integer capacidadCarga, TipoDeCarga carga, Double longitud) {
+        super(estado, marca, modelo, matricula, precio, anio, kilometraje, combustible, capacidadCombustible, tipo);
+        this.capacidadCarga = capacidadCarga;
+        this.carga = carga;
+        this.longitud = longitud;
+    }
+
+    public Integer getCapacidadCarga() {
+        return capacidadCarga;
+    }
+
+    public void setCapacidadCarga(Integer capacidadCarga) {
+        this.capacidadCarga = capacidadCarga;
+    }
+
+    public TipoDeCarga getCarga() {
+        return carga;
+    }
+
+    public void setCarga(TipoDeCarga carga) {
+        this.carga = carga;
+    }
+
+    public Double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(Double longitud) {
+        this.longitud = longitud;
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject = super.toJSON();
+            jsonObject.put("capacidadCarga", this.capacidadCarga);
+            jsonObject.put("longitud", this.longitud);
+            jsonObject.put("carga", this.carga.name());
+
+        }catch (JSONException e){
+            logger.severe("Error al convertir Camion a JSON: " + e.getMessage());
+        }
+
+        return jsonObject;
+    }
+
+    @Override
+    public void fromJSON(JSONObject json) {
+        try {
+            super.fromJSON(json);
+            this.capacidadCarga = json.getInt("capacidadCarga");
+            this.longitud = json.getDouble("longitud");
+            this.carga = TipoDeCarga.valueOf(json.getString("carga"));
+
+        }catch (JSONException e){
+            logger.severe("Error al cargar Camion desde JSON: " + e.getMessage());
+        }
+
+    }
+    @Override
+    public String toString() {
+        return super.toString() + String.format(
+                """
+                |                  CARACTERÍSTICAS DEL CAMIÓN            |
+                +--------------------------------------------------------+
+                | Tipo de Carga:          %-30s |
+                | Capacidad de Carga:     %,27d kg |
+                | Longitud:               %-28.2f m |
+                +--------------------------------------------------------+
+                """,
+                carga,
+                capacidadCarga,
+                longitud
+        );
+    }
+}

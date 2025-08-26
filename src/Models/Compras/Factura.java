@@ -1,0 +1,88 @@
+package Models.Compras;
+
+import Interfaz.JsonInterface;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.time.LocalDate;
+import java.util.logging.Logger;
+
+public class Factura implements JsonInterface {
+    private static final Logger logger = Logger.getLogger(Factura.class.getName());
+    private Double monto; //System - Vehiculo
+    private LocalDate fecha; // System LocalDate now
+    private Integer cuotasRestantes; //System - o 0
+
+    public Factura() {
+    }
+    public Factura(Integer cuotasRestantes, LocalDate fecha, Double monto) {
+        this.cuotasRestantes = cuotasRestantes;
+        this.fecha = fecha;
+        this.monto = monto;
+    }
+
+    public Integer getCuotasRestantes() {
+        return cuotasRestantes;
+    }
+
+    public void setCuotasRestantes(Integer cuotasRestantes) {
+        this.cuotasRestantes = cuotasRestantes;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
+    public Double getMonto() {
+        return monto;
+    }
+
+    public void setMonto(Double monto) {
+        this.monto = monto;
+    }
+
+    @Override
+    public void fromJSON(JSONObject json) {
+        try{
+            this.cuotasRestantes = json.getInt("cuotasRestantes");
+            this.monto = json.getDouble("monto");
+            this.fecha = LocalDate.parse(json.getString("fecha"));
+        }catch (JSONException e){
+            logger.severe("Error al cargar Factura desde JSON: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("cuotasRestantes", this.cuotasRestantes);
+            jsonObject.put("monto", this.monto);
+            jsonObject.put("fecha", this.fecha.toString());
+            return jsonObject;
+        } catch (JSONException e) {
+            logger.severe("Error al convertir Factura a JSON: " + e.getMessage());
+        }
+        return jsonObject;
+    }
+    @Override
+    public String toString() {
+        return String.format("""
+                +--------------------------------------------------------+
+                |                          FACTURA                       |
+                +--------------------------------------------------------+
+                | Cuotas Restantes: %-30d       |
+                | Monto:           $%-30.2f       |
+                | Fecha:           %-30s        |
+                +--------------------------------------------------------+
+                """,
+                cuotasRestantes,
+                monto,
+                fecha.toString()
+        );
+    }
+}

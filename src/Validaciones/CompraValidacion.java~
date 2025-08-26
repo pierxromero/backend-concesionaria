@@ -1,0 +1,83 @@
+package Validaciones;
+
+import Enums.Compras.Plazo;
+import Enums.Compras.TipoDePago;
+import Exceptions.FormatoInvalidoException;
+
+public class CompraValidacion {
+      ///Validacion Plan De Compra
+      public static Double validarMontoInicial(String montoInicialStr, Double precioVehiculo) throws FormatoInvalidoException {
+          //Verificar si el string está vacío o contiene solo espacios
+          if (montoInicialStr == null || montoInicialStr.trim().isEmpty()) {
+              throw new FormatoInvalidoException("El monto inicial no puede estar vacío ni ser solo espacios.");
+          }
+          //Intentar convertir la entrada a un número
+          Double montoInicial;
+          try {
+              montoInicial = Double.parseDouble(montoInicialStr.trim());
+          } catch (NumberFormatException e) {
+              throw new FormatoInvalidoException("El monto inicial ingresado no es un número válido.");
+          }
+          //Definir límites de validación
+          double montoMinimo = precioVehiculo * 0.50; // 50% del precio del vehículo
+          double montoMaximo = precioVehiculo;       // Precio total del vehículo
+          //Validar si está dentro de los límites
+          if (montoInicial < montoMinimo) {
+              throw new FormatoInvalidoException("El monto inicial no puede ser menor al 10% del precio del vehículo. Mínimo requerido: $" + montoMinimo);
+          }
+          if (montoInicial > montoMaximo) {
+              throw new FormatoInvalidoException("El monto inicial no puede superar el precio total del vehículo. Máximo permitido: $" + montoMaximo);
+          }
+          return montoInicial; //Si pasa todas las validaciones, devolver el monto inicial
+      }
+      public static Plazo validarPlazo(String input) throws FormatoInvalidoException {
+          if (input == null || input.trim().isEmpty()) {
+              throw new FormatoInvalidoException("El plazo no puede estar vacío.");
+          }
+          String inputNormalizado = input.trim().toLowerCase();
+          switch (inputNormalizado) {
+              case "doce meses":
+                  return Plazo.DOCE_MESES;
+              case "veinticuatro meses":
+                  return Plazo.VEINTICUATRO_MESES;
+              case "treinta y seis meses":
+                  return Plazo.TREINTA_Y_SEIS_MESES;
+              default:
+                  throw new FormatoInvalidoException("El plazo ingresado no es válido. Las opciones son: 'doce meses', 'veinticuatro meses' o 'treinta y seis meses'.");
+          }
+      }
+    public static Double validarMontoInicial(String input) throws FormatoInvalidoException {
+        if (input == null || input.trim().isEmpty()) {
+            throw new FormatoInvalidoException("El monto inicial no puede estar vacío.");
+        }
+        try {
+            double monto = Double.parseDouble(input.trim());
+
+            if (monto < 0) {
+                throw new FormatoInvalidoException("El monto inicial no puede ser negativo.");
+            }
+            // Limitar a un valor máximo razonable, por ejemplo, 1,000,000
+            if (monto > 1_000_000) {
+                throw new FormatoInvalidoException("El monto inicial no puede ser mayor a 1,000,000.");
+            }
+            return monto;
+        } catch (NumberFormatException e) {
+            throw new FormatoInvalidoException("El monto inicial debe ser un número válido.");
+        }
+    }
+    //Compra
+    public static TipoDePago validarTipoDePago(String input) throws FormatoInvalidoException {
+        if (input == null || input.trim().isEmpty()) {
+            throw new FormatoInvalidoException("El tipo de pago no puede estar vacío.");
+        }
+
+        switch (input.trim().toUpperCase()) {
+            case "EFECTIVO":
+                return TipoDePago.EFECTIVO;
+            case "CREDITO":
+                return TipoDePago.CREDITO;
+            default:
+                throw new FormatoInvalidoException("Tipo de pago inválido: " + input);
+        }
+    }
+}

@@ -1,0 +1,24 @@
+package Models;
+
+import Exceptions.DniInvalidoException;
+import Exceptions.FormatoInvalidoException;
+import Exceptions.PersonaNoEncontradaException;
+import Models.Gestores.Gestor;
+import Models.Gestores.JSONUtil;
+import Models.Persona.Empleado;
+import Models.Persona.Personas;
+import Models.Vehiculos.Moto;
+import Models.Vehiculos.Vehiculo;
+
+import java.sql.SQLOutput;
+import java.util.Scanner;
+
+public class Menu {
+
+    public Menu() {
+    }
+
+    public void inicio()throws PersonaNoEncontradaException, FormatoInvalidoException {
+
+    }
+}

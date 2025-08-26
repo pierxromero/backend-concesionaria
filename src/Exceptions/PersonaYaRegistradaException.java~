@@ -1,0 +1,7 @@
+package Exceptions;
+
+public class PersonaYaRegistradaException extends RuntimeException {
+  public PersonaYaRegistradaException(String message) {
+    super(message);
+  }
+}

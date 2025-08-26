@@ -1,0 +1,47 @@
+[
+    {
+        "estado": true,
+        "tipo": "AUTO",
+        "color": "Rojo",
+        "sistemaNavegacion": true,
+        "capacidadCombustible": 50,
+        "numeroPuertas": 4,
+        "modelo": "Corolla",
+        "combustible": "GASOLINA",
+        "marca": "Toyota",
+        "precio": 20000,
+        "kilometraje": 15000,
+        "matricula": "ABC123",
+        "anio": 2021
+    },
+    {
+        "estado": true,
+        "tipo": "MOTO",
+        "capacidadCombustible": 18,
+        "capacidadCarga": 10,
+        "modelo": "YZF-R1",
+        "combustible": "GASOLINA",
+        "marca": "Yamaha",
+        "precio": 15000,
+        "kilometraje": 5000,
+        "matricula": "MOTO123",
+        "sistemaAudio": true,
+        "anio": 2020,
+        "tipoDeMoto": "DEPORTIVA"
+    },
+    {
+        "estado": true,
+        "tipo": "CAMION",
+        "capacidadCombustible": 300,
+        "capacidadCarga": 20000,
+        "modelo": "FH16",
+        "combustible": "DIESEL",
+        "carga": "PESADA",
+        "marca": "Volvo",
+        "precio": 80000,
+        "longitud": 12.5,
+        "kilometraje": 120000,
+        "matricula": "CAM123",
+        "anio": 2019
+    }
+]

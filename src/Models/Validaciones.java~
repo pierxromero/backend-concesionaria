@@ -1,0 +1,174 @@
+package Models;
+
+
+import Enums.TipoDeObject;
+import Enums.Vehiculos.TipoDeCarga;
+import Enums.Vehiculos.TipoDeCombustible;
+import Enums.Vehiculos.TipoDeMoto;
+import Exceptions.*;
+import Exceptions.Personas.DniInvalidoException;
+import Exceptions.Personas.EmailInvalidoException;
+import Exceptions.Personas.NombreApellidoInvalidoException;
+import Exceptions.Personas.TelefonoInvalidoException;
+import Models.Persona.Cliente;
+import Models.Persona.Empleado;
+import Models.Persona.Personas;
+
+import java.time.Year;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Validaciones {
+    public static String validarSiONo(String input) throws FormatoInvalidoException {
+        if (input == null || input.trim().isEmpty()) {
+            return null; // Si el valor es null o vacío, retornar null
+        }
+
+        String trimmedInput = input.trim().toLowerCase(); // Eliminar espacios y convertir a minúsculas
+
+        // Verificar si la entrada es "si" o "no"
+        if (trimmedInput.equals("si") || trimmedInput.equals("no")) {
+            return trimmedInput; // Devuelve el valor en minúsculas ("si" o "no")
+        } else {
+            throw new FormatoInvalidoException("Entrada inválida. Solo se permiten los valores 'si' o 'no'.");
+        }
+    }
+    /* Validaciones para la contraseña */
+    public static boolean validarContrasena(String contrasena) throws ContrasenaInvalidaException {
+        //Verifica que la contraseña no sea nula ni vacía
+        if (contrasena == null || contrasena.trim().isEmpty()) {
+            throw new ContrasenaInvalidaException("La contraseña no puede estar vacía ni contener solo espacios.");
+        }
+        //Verifica la longitud
+        if (contrasena.length() < 4 || contrasena.length() > 20) {
+            throw new ContrasenaInvalidaException("La contraseña debe tener entre 4 y 20 caracteres.");
+        }
+        //Verifica que no contenga caracteres especiales
+        if (!contrasena.matches("[a-zA-Z0-9]+")) {
+            throw new ContrasenaInvalidaException("La contraseña solo puede contener letras y números.");
+        }
+        return true;
+    }
+    public static boolean validarLogin(Consecionaria consecionaria, String dni, String password) throws DniInvalidoException {
+        Personas persona = consecionaria.buscarPersonaPorDni(dni);
+        if (persona instanceof Empleado) {
+            Empleado empleado = (Empleado) persona;
+            return empleado.getContrasena().equals(password);
+        } else {
+            throw new DniInvalidoException("El usuario con el DNI ingresado no es un empleado.");
+        }
+    }
+    /* Validaciones para el DNI */
+    public static Boolean validarDni(String dni)throws DniInvalidoException
+    {
+        if(dni.length()>9 || !(dni.matches("\\d+"))||dni.length()<7)
+        {
+            throw new DniInvalidoException("Formato de DNI invalido");
+        }
+        else{
+            return true;
+        }
+    }
+    public static Boolean validarBoolean(String aValidar)throws FormatoInvalidoException
+    {
+        if(aValidar.equalsIgnoreCase("true")||aValidar.equalsIgnoreCase("false"))
+        {
+            return true;
+        }
+        else{
+            throw new FormatoInvalidoException("Formato invalido debe ingresar true o false");
+        }
+    }
+    public static Boolean validarMarca(String marca)throws FormatoInvalidoException
+    {
+
+        if (marca.matches(".*\\d.*")){
+            throw new FormatoInvalidoException("Marca inexistente");
+        }else{
+            return true;
+        }
+    }
+    public static Boolean validarMatriculaMoto(String matricula)throws FormatoInvalidoException
+    {
+        String regex = "^[A-Za-z]{3}[0-9]{3}$|^[A-Za-z]{1}[0-9]{3}[A-Za-z]{3}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(matricula);
+        if(matcher.matches())
+        {
+            return true;
+        }else {
+            throw new FormatoInvalidoException("Formato de matricula invalido");
+        }
+    }
+    public static Boolean ValidarPrecio(String precio)throws FormatoInvalidoException
+    {
+        try{
+            Double.parseDouble(precio);
+            return true;
+        }catch(NumberFormatException e){
+            return false;
+        }
+    }
+
+
+    public static boolean validarNombreApellido(String aValidar) {
+        try {
+            if (aValidar == null || aValidar.trim().isEmpty()) {
+                throw new NombreApellidoInvalidoException("El valor no puede ser vacío.");
+            }
+            if (!aValidar.matches("[a-zA-ZáéíóúÁÉÍÓÚÑñ ]+")) {
+                throw new NombreApellidoInvalidoException("El valor debe contener solo letras y espacios.");
+            }
+            return true;
+        } catch (NombreApellidoInvalidoException e) {
+            System.out.println("Error de validación en nombre o apellido: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean validarEmail(String email) {
+        try {
+            if (email == null || !email.matches("^[\\w-.]+@[\\w-]+\\.[a-z]{2,}$")) {
+                throw new EmailInvalidoException("El email ingresado no es válido.");
+            }
+            return true;
+        } catch (EmailInvalidoException e) {
+            System.out.println("Error de validación en email: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean validarTelefono(String telefono) {
+        try {
+            if (telefono == null || !telefono.matches("\\d{10}")) {
+                throw new TelefonoInvalidoException("El teléfono ingresado debe tener 10 dígitos.");
+            }
+            return true;
+        } catch (TelefonoInvalidoException e) {
+            System.out.println("Error de validación en teléfono: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public static boolean validarCliente(Cliente cliente, Consecionaria consecionaria)  {
+        if (!Validaciones.validarNombreApellido(cliente.getNombre())) {
+            return false;
+        }
+        if (!Validaciones.validarNombreApellido(cliente.getApellido())) {
+            return false;
+        }
+        if (!Validaciones.validarDni(cliente.getDni())) {
+            return false;
+        }
+
+        if (!Validaciones.validarEmail(cliente.getEmail())) {
+            return false;
+        }
+        if (!Validaciones.validarTelefono(cliente.getTelefono())) {
+            return false;
+        }
+        return true;
+    }
+
+
+}

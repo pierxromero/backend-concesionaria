@@ -1,0 +1,6 @@
+package Interfaz;
+
+public interface Identificable {
+    public void getId();
+    public Boolean setEstado(Boolean estado);
+}
